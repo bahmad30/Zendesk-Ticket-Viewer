@@ -1,17 +1,15 @@
 package com.company;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLParameters;
+import javax.swing.text.View;
 import java.io.IOException;
 import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Duration;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+
 
 public class Viewer {
 
@@ -25,11 +23,9 @@ public class Viewer {
     private Ticket[] tickets;
 
     // current page being viewed (one indexed)
-    private int currentPage;
+    private int page;
 
-    // total number of tickets
-    private int ticketCount;
-
+    // temporary credentials
     private static final String API_AUTH = "bmahmad2@illinois.edu/token:2UM9VcRwPTeOWPJEgsi6FCi7aMqxVsZbGidE6RUX";
 
     /**
@@ -40,16 +36,22 @@ public class Viewer {
     /**
      * Detailed constructor.
      * @param tickets tickets on current page
-     * @param currentPage current page number
+     * @param page current page number
      */
-    public Viewer(Ticket[] tickets, int currentPage) {
+    public Viewer(Ticket[] tickets, int page) {
         this.tickets = tickets;
-        this.currentPage = currentPage;
+        this.page = page;
     }
 
-    public Viewer getTickets() throws URISyntaxException, IOException, InterruptedException {
+    /**
+     * Requests all tickets for an account.
+     * @return Viewer with populated tickets, meta, links, and page fields.
+     * @throws URISyntaxException exception
+     * @throws IOException exception
+     * @throws InterruptedException exception
+     */
+    public static Viewer getTickets() throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String credentials = "bmahmad2@illinois.edu:Create123";
 
         // build request
         HttpRequest request = HttpRequest.newBuilder()
@@ -71,12 +73,12 @@ public class Viewer {
             }
         }
 
+        // convert json to instance of viewer class
+        ObjectMapper mapper = new ObjectMapper();
+        Viewer viewer = mapper.readValue(response.body(), Viewer.class);
+        viewer.page = 1;
 
-
-
-
-
-        return new Viewer();
+        return viewer;
     }
 
     public Viewer getNextPage() {
