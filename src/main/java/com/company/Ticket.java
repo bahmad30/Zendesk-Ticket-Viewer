@@ -1,7 +1,7 @@
 package com.company;
 
 /**
- * Represents a single ticket object.
+ * Represents single ticket object.
  */
 public class Ticket {
 
@@ -17,12 +17,12 @@ public class Ticket {
     private String due_at;
 
     /**
-     * Default constructor.
+     * Default constructor
      */
     public Ticket() {}
 
     /**
-     * Detailed constructor.
+     * Detailed constructor
      * @param id ticket id
      * @param requester_id requester id
      * @param assignee_id assignee id

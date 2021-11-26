@@ -1,9 +1,7 @@
 package com.company;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 
-import javax.swing.text.View;
 import java.io.IOException;
 import java.net.*;
 import java.net.http.HttpClient;
@@ -11,6 +9,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 
+/**
+ * Represents viewer object. Fetches tickets, manages pagination.
+ */
 public class Viewer {
 
     // url for requesting from Zendesk API
@@ -19,8 +20,11 @@ public class Viewer {
     // tickets displayed per page
     private static final int PAGE_SIZE = 25;
 
-    // array of tickets on single page
+    // array of tickets for account
     private Ticket[] tickets;
+
+    // meta for account
+    private Meta meta;
 
     // current page being viewed (one indexed)
     private int page;
@@ -38,8 +42,9 @@ public class Viewer {
      * @param tickets tickets on current page
      * @param page current page number
      */
-    public Viewer(Ticket[] tickets, int page) {
+    public Viewer(Ticket[] tickets, Meta meta, int page) {
         this.tickets = tickets;
+        this.meta = meta;
         this.page = page;
     }
 
@@ -73,7 +78,7 @@ public class Viewer {
             }
         }
 
-        // convert json to instance of viewer class
+        // convert json to instance of viewer class (tickets, meta, and links auto-populated)
         ObjectMapper mapper = new ObjectMapper();
         Viewer viewer = mapper.readValue(response.body(), Viewer.class);
         viewer.page = 1;
@@ -89,15 +94,9 @@ public class Viewer {
         return new Viewer();
     }
 
-    public Viewer getSingleTicket(int id) throws IOException {
+    public Viewer getTicketDetails(int id) throws IOException {
         return new Viewer();
     }
-
-
-
-
-
-
 
 
 }
