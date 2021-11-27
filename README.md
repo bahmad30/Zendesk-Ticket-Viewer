@@ -45,10 +45,13 @@ and ViewerTest.java using you IDE's run/test feature.
 ## Features & Screenshots
 
 The user is greeted with a main menu:
+
 ![Alt text](/screenshots/main_menu.png?raw=true)
 
 The user can view a list of ticket previews:
+
 ![Alt text](/screenshots/page.png?raw=true)
 
 The user can also page through these ticket previews, or view an individual ticket's details:
+
 ![Alt text](/screenshots/single_ticket.png?raw=true)
