@@ -14,7 +14,7 @@ to your working directory.
 ```
 git clone https://github.com/bahmad30/Zendesk-Ticket-Viewer.git
 ```
-Then open this project using your IDE (IntelliJ, Eclipse, VSCode, etc.)
+Then open this project using your IDE of choice (IntelliJ, Eclipse, VSCode, etc.)
 
 ## Usage
 
