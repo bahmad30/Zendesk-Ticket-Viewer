@@ -122,7 +122,7 @@ public class Viewer {
      * @throws URISyntaxException exception
      * @throws InterruptedException exception
      */
-    public Viewer getSingleTicket(int id) throws IOException, URISyntaxException, InterruptedException {
+    public static Viewer getSingleTicket(int id) throws IOException, URISyntaxException, InterruptedException {
         URI uri = new URI(API_URL + "/show_many.json?ids=" + id);
         Viewer viewer = getPageHelper(uri);
         viewer.page = 1;
@@ -130,7 +130,7 @@ public class Viewer {
         // check for non-existent id
         if (viewer.tickets.length != 0) return viewer;
 
-        return this;
+        throw new IOException();
     }
 
     /**
@@ -167,6 +167,16 @@ public class Viewer {
         // convert json to instance of viewer class (tickets, meta, and links auto-populated)
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(response.body(), Viewer.class);
+    }
+
+    public String displayPage() {
+        StringBuilder str = new StringBuilder("ID\t\tSUBJECT\t\t\t\t\tCREATED\n");
+
+        for (Ticket t : tickets) {
+            str.append(t.displayPreview()).append("\n");
+        }
+
+        return str.toString();
     }
 
     // getters and setters

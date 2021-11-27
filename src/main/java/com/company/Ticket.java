@@ -2,6 +2,8 @@ package com.company;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
+
 /**
  * Represents single ticket object.
  */
@@ -15,9 +17,7 @@ public class Ticket {
     private String subject;
     private String description;
     private String[] tags;
-    private String type;
     private String created_at;
-    private String due_at;
 
     /**
      * Default constructor
@@ -32,22 +32,34 @@ public class Ticket {
      * @param subject ticket subject
      * @param description ticket body
      * @param tags array of ticket tags
-     * @param type type of ticket (problem, incident, question, task)
      * @param created_at when ticket was created
-     * @param due_at when ticket is due (only for task types)
      */
-    public Ticket(int id, long requester_id, long assignee_id, String subject, String description,
-                  String[] tags, String type, String created_at, String due_at) {
+    public Ticket(int id, long requester_id, long assignee_id, String subject,
+                  String description, String[] tags, String created_at) {
         this.id = id;
         this.requester_id = requester_id;
         this.assignee_id = assignee_id;
         this.subject = subject;
         this.description = description;
         this.tags = tags;
-        this.type = type;
         this.created_at = created_at;
-        this.due_at = due_at;
     }
+
+    public String displayPreview() {
+        StringBuilder subj = new StringBuilder(this.subject);
+
+        if (subj.length() >= 20) {
+            subj = new StringBuilder(subj.substring(0, 16) + "...");
+        } else {
+            int diff = 20 - subj.length();
+            subj.append(" ".repeat(Math.max(0, diff)));
+        }
+
+        String date = this.created_at.substring(0,10) + " " + this.created_at.substring(11,16);
+
+        return this.id + "\t\t" + subj + "\t\t" + date;
+    }
+
 
     // getters and setters
 
@@ -99,28 +111,12 @@ public class Ticket {
         this.tags = tags;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getCreated_at() {
         return created_at;
     }
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
-    }
-
-    public String getDue_at() {
-        return due_at;
-    }
-
-    public void setDue_at(String due_at) {
-        this.due_at = due_at;
     }
 }
 
