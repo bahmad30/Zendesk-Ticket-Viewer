@@ -2,7 +2,6 @@ package com.company;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
 
 /**
  * Represents single ticket object.
@@ -45,6 +44,10 @@ public class Ticket {
         this.created_at = created_at;
     }
 
+    /**
+     * Displays the preview for a ticket (used when displaying pages)
+     * @return formatted string containing id, subject, and creation time
+     */
     public String displayPreview() {
         StringBuilder subj = new StringBuilder(this.subject);
 
@@ -60,6 +63,10 @@ public class Ticket {
         return this.id + "\t\t" + subj + "\t\t" + date;
     }
 
+    /**
+     * Displays details for a ticket (used when displaying single ticket)
+     * @return formatted string with all ticket details
+     */
     public String displayDetails() {
         StringBuilder res = new StringBuilder();
         res.append("SUBJECT:      ").append(subject).append("\n");

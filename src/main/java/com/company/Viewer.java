@@ -17,8 +17,9 @@ import java.util.Base64;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Viewer {
 
-    // url for requesting from Zendesk API
-    private static final String API_URL = "https://" + System.getenv("ENV_SUBDOMAIN") + ".zendesk.com/api/v2/tickets";
+    // url for requesting from Zendesk API - should be in form: https://{subdomain}.zendesk.com/api/v2/tickets
+    private static final String API_URL = "https://" +
+            System.getenv("ENV_SUBDOMAIN") + ".zendesk.com/api/v2/tickets";
 
     // tickets displayed per page
     private static final int PAGE_SIZE = 25;
@@ -35,8 +36,9 @@ public class Viewer {
     // current page being viewed (one indexed)
     private int page;
 
-    // credentials - should be in the form: {email@example.com}/token:{token}
-    private static final String API_AUTH = System.getenv("ENV_EMAIL") + "/token:" + System.getenv("ENV_TOKEN");
+    // credentials for accessing API - should be in form: {email@example.com}/token:{token}
+    private static final String API_AUTH = System.getenv("ENV_EMAIL") +
+            "/token:" + System.getenv("ENV_TOKEN");
 
     /**
      * Default constructor.
@@ -167,6 +169,10 @@ public class Viewer {
         return mapper.readValue(response.body(), Viewer.class);
     }
 
+    /**
+     * Method for displaying ticket previews on a page.
+     * @return string to be printed
+     */
     public String displayPage() {
         StringBuilder str = new StringBuilder("ID\t\tSUBJECT\t\t\t\t\tCREATED\n");
 

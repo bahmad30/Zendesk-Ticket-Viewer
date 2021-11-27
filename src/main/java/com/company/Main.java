@@ -11,7 +11,6 @@ public class Main {
     public static void main(String[] args) throws InterruptedException, IOException, URISyntaxException {
         Viewer viewer;
         String input;
-
         Scanner scanner = new Scanner(System.in);
         newline();
         System.out.println(BR + " WELCOME TO THE ZENDESK TICKET VIEWER! " + BR);
@@ -28,18 +27,21 @@ public class Main {
             System.out.print("> ");
             input = scanner.nextLine().trim();
 
-            if (input.equals("1") || input.equals("[1]")) {
-                // view first ticket page and enter pagination loop
-                viewer = Viewer.getFirstPage();
-                displayTicketPage(viewer);
-                paginationLoop(viewer, scanner);
-
-            } else if (input.equals("2") || input.equals("[2]")) {
+            if (input.equals("1")) {
+                // view first ticket page and enter pagination loop. catch connection error if needed.
+                try {
+                    viewer = Viewer.getFirstPage();
+                    displayTicketPage(viewer);
+                    paginationLoop(viewer, scanner);
+                } catch (Exception e) {
+                    System.out.println("Oh no! The Zendesk API is unavailable. " +
+                            "Please check your connection or try again later");
+                }
+            } else if (input.equals("2")) {
                 // view single ticket details
                 displayTicket(scanner);
 
-            } else if (input.equals("3") || input.equals("[3]")) {
-                // quit
+            } else if (input.equals("3")) {
                 newline();
                 System.out.println(BR + " THANK YOU FOR USING THE ZENDESK TICKET VIEWER. GOODBYE! " + BR);
                 break;
@@ -63,22 +65,22 @@ public class Main {
             System.out.print("> ");
             String input = scanner.nextLine().trim();
 
-            if (input.equals("1") || input.equals("[1]")) {
+            if (input.equals("1")) {
                 // view next ticket page
                 viewer = viewer.getNextPage();
                 displayTicketPage(viewer);
 
-            } else if (input.equals("2") || input.equals("[2]")) {
+            } else if (input.equals("2")) {
                 // view previous ticket page
                 viewer = viewer.getPreviousPage();
                 displayTicketPage(viewer);
 
-            } else if (input.equals("3") || input.equals("[3]")) {
+            } else if (input.equals("3")) {
                 // view single ticket details
                 displayTicket(scanner);
                 break;
 
-            } else if (input.equals("4") || input.equals("[4]")) {
+            } else if (input.equals("4")) {
                 // return to main menu
                 break;
 

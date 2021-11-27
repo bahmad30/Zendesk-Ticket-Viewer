@@ -63,10 +63,8 @@ public class ViewerTest {
         assertEquals(1, viewer.getPage());
     }
 
-    @Test
+    @Test(expected = IOException.class)
     public void getSingleTicketInvalid() throws InterruptedException, IOException, URISyntaxException {
-        Viewer viewer = Viewer.getFirstPage();
-        viewer = viewer.getSingleTicket(500);
-        assertEquals(25, viewer.getTickets().length);
+        Viewer viewer = Viewer.getSingleTicket(500);
     }
 }
