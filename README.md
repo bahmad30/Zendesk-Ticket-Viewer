@@ -18,8 +18,8 @@ Then open this project using your IDE of choice (IntelliJ, Eclipse, VSCode, etc.
 
 ## Usage
 
-You must create environment variables ENV_EMAIL, ENV_SUBDOMAIN, and ENV_TOKEN,
-which should hold your Zendesk email, subdomain, and API token respectively:
+You must create the following environment variables to
+which should hold your Zendesk email, subdomain, and API token:
 
 ```
 ENV_EMAIL={email@example.com}
