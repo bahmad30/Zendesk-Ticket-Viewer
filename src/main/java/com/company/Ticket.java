@@ -140,4 +140,3 @@ public class Ticket {
         this.created_at = created_at;
     }
 }
-
