@@ -52,12 +52,26 @@ public class Ticket {
             subj = new StringBuilder(subj.substring(0, 16) + "...");
         } else {
             int diff = 20 - subj.length();
-            subj.append(" ".repeat(Math.max(0, diff)));
+            subj.append(" ".repeat(diff));
         }
 
         String date = this.created_at.substring(0,10) + " " + this.created_at.substring(11,16);
 
         return this.id + "\t\t" + subj + "\t\t" + date;
+    }
+
+    public String displayDetails() {
+        StringBuilder res = new StringBuilder();
+        res.append("SUBJECT:      ").append(subject).append("\n");
+        res.append("REQUESTER ID: ").append(requester_id).append("\n");
+        res.append("ASSIGNEE ID:  ").append(assignee_id).append("\n");
+        res.append("CREATED AT:   ").append(created_at).append("\n\n");
+        res.append("DESCRIPTION:  ").append(description).append("\n\n");
+        res.append("TAGS: ");
+        for (String tag : tags) {
+            res.append(tag).append(", ");
+        }
+        return res.toString().substring(0, res.length()-2);
     }
 
 

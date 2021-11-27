@@ -107,7 +107,11 @@ public class Main {
             newline();
             int n = Integer.parseInt((input));
             Viewer viewer = Viewer.getSingleTicket(n);
-            System.out.println(viewer.displayPage()); // make detailed
+            Ticket t = viewer.getTickets()[0];
+            System.out.println(BR + " VIEW TICKET (ID: " + t.getId() + ") " + BR);
+            System.out.println(t.displayDetails());
+            System.out.println(BR + " END OF TICKET " + BR);
+            newline();
 
         } catch (NumberFormatException c) {
             System.out.println("Oh no! Ticket IDs must be integers. Retuning to main menu...");
