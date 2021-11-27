@@ -23,6 +23,17 @@ Then open this project using your IDE (IntelliJ, Eclipse, VSCode, etc.)
 
 ---
 
+You must create environment variables ENV_EMAIL, ENV_SUBDOMAIN, and ENV_TOKEN,
+which should hold your Zendesk email, subdomain, and API token respectively:
+
+```
+ENV_EMAIL={email@example.com}
+ENV_SUBDOMAIN={yoursubdomain}
+ENV_TOKEN={yourAPItoken}
+```
+
+Alternativey, you can directly edit the API_URL and API_AUTH fields in Viewer.java.
+
 To run this application, navigate to Main.java (located under src/main/java/com/company)
 and run the main method using your IDE's run feature. This will launch the application in
 the command line, where you can use your keyboard to:
@@ -49,5 +60,4 @@ The user can view a list of ticket previews:
 ![Alt text](/screenshots/ticket_page.png?raw=true)
 
 The user can also page through these ticket previews, or view an individual ticket's details:
-![Alt text](/screenshots/single_ticket_display.png?raw=true)
-
+![Alt text](/screenshots/single_ticket.png?raw=true)
