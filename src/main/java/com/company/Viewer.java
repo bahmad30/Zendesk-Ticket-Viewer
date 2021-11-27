@@ -19,7 +19,6 @@ public class Viewer {
 
     // url for requesting from Zendesk API
     private static final String API_URL = "https://" + System.getenv("ENV_SUBDOMAIN") + ".zendesk.com/api/v2/tickets";
-    //private static final String API_URL = "https://zccbilaal.zendesk.com/api/v2/tickets";
 
     // tickets displayed per page
     private static final int PAGE_SIZE = 25;
@@ -38,7 +37,6 @@ public class Viewer {
 
     // credentials - should be in the form: {email@example.com}/token:{token}
     private static final String API_AUTH = System.getenv("ENV_EMAIL") + "/token:" + System.getenv("ENV_TOKEN");
-    //private static final String API_AUTH = "bmahmad2@illinois.edu/token:GvFUqzPRahCftAob8bu0SgO8Ic7ULjuUf4nq3TEh";
 
     /**
      * Default constructor.
