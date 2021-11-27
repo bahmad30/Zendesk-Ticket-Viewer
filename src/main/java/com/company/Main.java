@@ -29,49 +29,14 @@ public class Main {
             input = scanner.nextLine().trim();
 
             if (input.equals("1") || input.equals("[1]")) {
-                // view first ticket page
+                // view first ticket page and enter pagination loop
                 viewer = Viewer.getFirstPage();
-                viewTicketPage(viewer);
-
-                // ticket pagination loop
-                while (true) {
-                    System.out.println("What would you like to do?");
-                    System.out.println("[1] Next page");
-                    System.out.println("[2] Previous page");
-                    System.out.println("[3] View ticket by ID");
-                    System.out.println("[4] Back to main menu");
-                    newline();
-                    System.out.print("> ");
-                    input = scanner.nextLine().trim();
-
-                    if (input.equals("1") || input.equals("[1]")) {
-                        // view next ticket page
-                        viewer = viewer.getNextPage();
-                        viewTicketPage(viewer);
-
-                    } else if (input.equals("2") || input.equals("[2]")) {
-                        // view previous ticket page
-                        viewer = viewer.getPreviousPage();
-                        viewTicketPage(viewer);
-
-                    } else if (input.equals("3") || input.equals("[3]")) {
-                        // view single ticket details
-                        viewSingleTicket(scanner);
-                        break;
-                    } else if (input.equals("4") || input.equals("[4]")) {
-                        // return to main menu
-                        break;
-                    } else {
-                        // invalid command
-                        newline();
-                        System.out.println("Please enter a valid command! Returning to main menu...");
-                        break;
-                    }
-                }
+                displayTicketPage(viewer);
+                paginationLoop(viewer, scanner);
 
             } else if (input.equals("2") || input.equals("[2]")) {
                 // view single ticket details
-                viewSingleTicket(scanner);
+                displayTicket(scanner);
 
             } else if (input.equals("3") || input.equals("[3]")) {
                 // quit
@@ -87,13 +52,52 @@ public class Main {
         }
     }
 
-    private static void viewTicketPage(Viewer viewer) throws InterruptedException, IOException, URISyntaxException {
+    private static void paginationLoop(Viewer viewer, Scanner scanner) throws InterruptedException, IOException, URISyntaxException {
+        while (true) {
+            System.out.println("What would you like to do?");
+            System.out.println("[1] Next page");
+            System.out.println("[2] Previous page");
+            System.out.println("[3] View ticket by ID");
+            System.out.println("[4] Back to main menu");
+            newline();
+            System.out.print("> ");
+            String input = scanner.nextLine().trim();
+
+            if (input.equals("1") || input.equals("[1]")) {
+                // view next ticket page
+                viewer = viewer.getNextPage();
+                displayTicketPage(viewer);
+
+            } else if (input.equals("2") || input.equals("[2]")) {
+                // view previous ticket page
+                viewer = viewer.getPreviousPage();
+                displayTicketPage(viewer);
+
+            } else if (input.equals("3") || input.equals("[3]")) {
+                // view single ticket details
+                displayTicket(scanner);
+                break;
+
+            } else if (input.equals("4") || input.equals("[4]")) {
+                // return to main menu
+                break;
+
+            } else {
+                // invalid command
+                newline();
+                System.out.println("Please enter a valid command! Returning to main menu...");
+                break;
+            }
+        }
+    }
+
+    private static void displayTicketPage(Viewer viewer) throws InterruptedException, IOException, URISyntaxException {
         newline();
         System.out.println(BR + " YOUR TICKETS " + "(PAGE " + viewer.getPage() + ") " + BR);
         System.out.println(viewer.displayPage());
     }
 
-    private static void viewSingleTicket(Scanner scanner) {
+    private static void displayTicket(Scanner scanner) {
         newline();
         System.out.println("Please enter ticket ID:");
         System.out.print("> ");
