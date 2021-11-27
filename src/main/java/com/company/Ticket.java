@@ -72,7 +72,8 @@ public class Ticket {
         res.append("SUBJECT:      ").append(subject).append("\n");
         res.append("REQUESTER ID: ").append(requester_id).append("\n");
         res.append("ASSIGNEE ID:  ").append(assignee_id).append("\n");
-        res.append("CREATED AT:   ").append(created_at).append("\n\n");
+        String date = this.created_at.substring(0,10) + " " + this.created_at.substring(11,16);
+        res.append("CREATED AT:   ").append(date).append("\n\n");
         res.append("DESCRIPTION:  ").append(description).append("\n\n");
         res.append("TAGS: ");
         for (String tag : tags) {
