@@ -1,14 +1,11 @@
 # Zendesk Ticket Viewer
 
----
-
 A simple CLI application that allows users to view and page through tickets 
 using the Zendesk API. This application was made with Java and Maven, and tested with JUnit.
 
 
 ## Installation
 
----
 To run this application you must have a compatible JDK installed.
 
 To use this application, first clone (or download) this repository
@@ -20,8 +17,6 @@ git clone https://github.com/bahmad30/Zendesk-Ticket-Viewer.git
 Then open this project using your IDE (IntelliJ, Eclipse, VSCode, etc.)
 
 ## Usage
-
----
 
 You must create environment variables ENV_EMAIL, ENV_SUBDOMAIN, and ENV_TOKEN,
 which should hold your Zendesk email, subdomain, and API token respectively:
@@ -43,15 +38,11 @@ the command line, where you can use your keyboard to:
 
 ## Testing
 
----
-
 To run the tests for this application, navigate to the test
 classes (located under /test/java/com/company). Here, you can run DisplayTest.java
 and ViewerTest.java using you IDE's run/test feature.
 
 ## Features & Screenshots
-
----
 
 The user is greeted with a main menu:
 ![Alt text](/screenshots/main_menu.png?raw=true)
