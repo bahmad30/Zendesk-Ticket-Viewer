@@ -1,5 +1,6 @@
 package com.company;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -7,15 +8,18 @@ import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Base64;
 
 
 /**
  * Represents viewer object. Fetches tickets, manages pagination.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Viewer {
 
     // url for requesting from Zendesk API
-    private static final String API_URL = "https://zccbilaal.zendesk.com/api/v2/tickets";
+    private static final String API_URL = "https://" + System.getenv("ENV_SUBDOMAIN") + ".zendesk.com/api/v2/tickets";
+    //private static final String API_URL = "https://zccbilaal.zendesk.com/api/v2/tickets";
 
     // tickets displayed per page
     private static final int PAGE_SIZE = 25;
@@ -26,11 +30,15 @@ public class Viewer {
     // meta for account
     private Meta meta;
 
+    // links for previous and next pages
+    private Links links;
+
     // current page being viewed (one indexed)
     private int page;
 
-    // TEMPORARY credentials
-    private static final String API_AUTH = "bmahmad2@illinois.edu/token:2UM9VcRwPTeOWPJEgsi6FCi7aMqxVsZbGidE6RUX";
+    // credentials - should be in the form: {email@example.com}/token:{token}
+    private static final String API_AUTH = System.getenv("ENV_EMAIL") + "/token:" + System.getenv("ENV_TOKEN");
+    //private static final String API_AUTH = "bmahmad2@illinois.edu/token:GvFUqzPRahCftAob8bu0SgO8Ic7ULjuUf4nq3TEh";
 
     /**
      * Default constructor.
@@ -42,9 +50,10 @@ public class Viewer {
      * @param tickets tickets on current page
      * @param page current page number
      */
-    public Viewer(Ticket[] tickets, Meta meta, int page) {
+    public Viewer(Ticket[] tickets, Meta meta, Links links, int page) {
         this.tickets = tickets;
         this.meta = meta;
+        this.links = links;
         this.page = page;
     }
 
@@ -55,7 +64,7 @@ public class Viewer {
      * @throws IOException exception
      * @throws InterruptedException exception
      */
-    public static Viewer getTickets() throws URISyntaxException, IOException, InterruptedException {
+    public static Viewer getFirstPage() throws URISyntaxException, IOException, InterruptedException {
         // get first page
         URI uri = new URI(API_URL + ".json?page[size]=" + PAGE_SIZE);
         Viewer viewer = getPageHelper(uri);
@@ -121,7 +130,7 @@ public class Viewer {
         // check for non-existent id
         if (viewer.tickets.length != 0) return viewer;
 
-        throw new IOException();
+        return this;
     }
 
     /**
@@ -134,13 +143,14 @@ public class Viewer {
     private static Viewer getPageHelper(URI uri) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpResponse<String> response;
+        String encodedCredential = new String(Base64.getEncoder().encode(API_AUTH.getBytes()));
 
         // build request
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(uri)
-                .header("Authorization", "Basic" + API_AUTH)
-                .header("Accept", "application/json")
                 .GET()
+                .header("Authorization", "Basic " + encodedCredential)
+                .header("Accept", "application/json")
+                .uri(uri)
                 .build();
 
         // send request and get response. catch and throw exceptions if needed
@@ -157,6 +167,40 @@ public class Viewer {
         // convert json to instance of viewer class (tickets, meta, and links auto-populated)
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(response.body(), Viewer.class);
+    }
+
+    // getters and setters
+
+    public Ticket[] getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Ticket[] tickets) {
+        this.tickets = tickets;
+    }
+
+    public Meta getMeta() {
+        return meta;
+    }
+
+    public void setMeta(Meta meta) {
+        this.meta = meta;
+    }
+
+    public Links getLinks() {
+        return links;
+    }
+
+    public void setLinks(Links links) {
+        this.links = links;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
 
 }

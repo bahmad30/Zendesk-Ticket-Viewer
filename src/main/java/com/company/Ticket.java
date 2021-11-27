@@ -1,14 +1,17 @@
 package com.company;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Represents single ticket object.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Ticket {
 
     // ticket properties
     private int id;
-    private int requester_id;
-    private int assignee_id;
+    private long requester_id;
+    private long assignee_id;
     private String subject;
     private String description;
     private String[] tags;
@@ -33,7 +36,7 @@ public class Ticket {
      * @param created_at when ticket was created
      * @param due_at when ticket is due (only for task types)
      */
-    public Ticket(int id, int requester_id, int assignee_id, String subject, String description,
+    public Ticket(int id, long requester_id, long assignee_id, String subject, String description,
                   String[] tags, String type, String created_at, String due_at) {
         this.id = id;
         this.requester_id = requester_id;
@@ -56,19 +59,19 @@ public class Ticket {
         this.id = id;
     }
 
-    public int getRequester_id() {
+    public long getRequester_id() {
         return requester_id;
     }
 
-    public void setRequester_id(int requester_id) {
+    public void setRequester_id(long requester_id) {
         this.requester_id = requester_id;
     }
 
-    public int getAssignee_id() {
+    public long getAssignee_id() {
         return assignee_id;
     }
 
-    public void setAssignee_id(int assignee_id) {
+    public void setAssignee_id(long assignee_id) {
         this.assignee_id = assignee_id;
     }
 
