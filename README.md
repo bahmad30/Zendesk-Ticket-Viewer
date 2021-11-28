@@ -53,4 +53,4 @@ The user can view a list of ticket previews:
 
 The user can also page through these ticket previews, or view an individual ticket's details:
 
-![Alt text](/screenshots/single_ticket.png?raw=true)
+![Alt text](/screenshots/ticket.png?raw=true)
